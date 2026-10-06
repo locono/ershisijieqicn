@@ -1,9 +1,13 @@
+<a id="zh"></a>
+
 # 廿四节气 · 中国人的时间美学
 
 > 一个关于二十四节气的单文件科普网站：节气轮盘、七十二候、民俗养生、节气诗话。
 > 全部内容写在一个 `index.html` 里，**零构建、零依赖、零网络请求**，双击即可打开。
 
 ![单文件](https://img.shields.io/badge/单文件-75%20KB-b89b6a) ![依赖](https://img.shields.io/badge/外部依赖-0-5c8f63) ![运行](https://img.shields.io/badge/运行方式-浏览器直接打开-4d6f8f)
+
+**中文** | [English](#en)
 
 ---
 
@@ -82,5 +86,98 @@
 ```
 .
 ├── index.html   # 全部内容（结构 + 样式 + 脚本 + 数据）
+└── README.md
+```
+
+---
+
+<a id="en"></a>
+
+# Twenty-Four Solar Terms · The Chinese Aesthetics of Time
+
+> A single-file educational website about the twenty-four solar terms: the solar term wheel, the seventy-two pentads, folk customs and seasonal health care, and the poetry of the terms.
+> Everything lives in one `index.html` — **no build step, no dependencies, no network requests**. Just double-click to open.
+
+![Single file](https://img.shields.io/badge/Single%20File-75%20KB-b89b6a) ![Dependencies](https://img.shields.io/badge/External%20Dependencies-0-5c8f63) ![Run](https://img.shields.io/badge/Run-Open%20in%20Browser-4d6f8f)
+
+[中文](#zh) | **English**
+
+---
+
+## Page Structure
+
+| Section | Anchor | Contents |
+|---|---|---|
+| Hero · Home | `#top` | Headline, lede, quick links, and the "Today's Term" card (progress ring + season switcher) |
+| Solar Term Wheel | `#wheel` | A 560px SVG wheel with the 24 terms arranged radially, tinted by season, and the four cardinal points marked |
+| Twenty-Four Terms | `#terms` | 24 term cards, filterable by season, with today's term flagged |
+| Seventy-Two Pentads | `#hou` | 24 sets × 3 pentads, each with a plain-language gloss |
+| Poetry of the Terms | `#poem` | One classical line per term, 24 in all, each with its source |
+| Solar Term Song | `#song` | The complete mnemonic verse, annotated with "6th/21st in the first half of the year, 8th/23rd in the second" |
+
+Top navigation: **Home 首页 / Pentads 七十二候 / Poetry 节气诗话 / Song 节气歌** — the current section is highlighted automatically as you scroll.
+
+---
+
+## Key Features
+
+### Content
+
+- **Today's term, computed automatically**: from the system date it derives the current term, the period it spans, the sun's ecliptic longitude, the days until the next term, and the phenology of the first pentad — landing correctly on any day of the year
+- **Full dossiers for all 24 terms**: each entry carries six fields — meaning, three pentads, folk customs, health care, farm work, and a verse
+- **Seventy-two pentads**: for example 「群鸟养羞 · 百鸟储食备冬」 — birds store up food against the winter
+- **Poetry of the terms**: 24 celebrated lines of classical verse, each with its source
+
+### Interaction
+
+- **Solar term wheel**: term names run radially along the spokes (the left half is flipped 180° so it stays readable); clicking any term slides open a drawer on the right
+- **Detail drawer**: close with ESC, step to the previous or next term with the ← → keys, or use the Prev / Next buttons at the bottom
+- **Start tour / Back to today**: the tour advances one term every 1.6 seconds, with pointer, palette, and particles following in sync
+- **Season filter**: the twenty-four terms section narrows to spring, summer, autumn, or winter
+- **Season switcher**: use the "Spring / Summer / Autumn / Winter" buttons under the today card, or click any term on the wheel, and the entire site's palette migrates
+- **Back to top**: a round floating button in the lower-right corner, appearing after roughly two-thirds of a screen of scrolling and gliding you smoothly back up
+- **Footer email**: click to copy `imuse@163.com`
+
+### Visuals & Motion
+
+- **Four-season mood engine**: `body[data-season]` drives the global accent color by cross-fading four full-screen gradient layers (1.2s)
+
+  | Spring | Summer | Autumn | Winter |
+  |---|---|---|---|
+  | `#5c8f63` | `#c1503f` | `#c08a2e` | `#4d6f8f` |
+
+- **Canvas seasonal particles**: spring — blossoms spiralling down; summer — slanting rain; autumn — swinging leaves; winter — fine snow. Between 34 and 110 particles depending on screen width, DPR-aware, and paused automatically when the tab goes to the background
+- **Hero background**: three large blobs of light, colored by season, drift slowly (26–38s loops); a giant 節 watermark rotates gently once every 90 seconds
+- **Title shimmer**: the headline 「一轮廿四节气」 is gradient text, swept by a seasonal streak of light every 7 seconds
+- **Cursor-following glow**: an accent-colored halo trails the pointer across the hero; the headline drifts slightly against it while the today card drifts with it, building depth
+- **Dimensional wheel**: 13° of mouse parallax gives it depth, an outer dashed ring rotates slowly, and the current term's sector pulses continuously
+- **Scroll parallax**: hero text rises at 0.22× while the light blobs and watermark fade out on exit
+- **Micro-interactions**: the today card floats as if breathing, seals slowly expand and contract, buttons lift on hover, the poem card's vertical rule draws from short to full, and pentad rows shift right
+- **Entrance animations**: hero layers fade in on staggered delays, grid items arrive in sequence (replayed when filtering), and the solar term song surfaces line by line
+
+### Accessibility & Fallbacks
+
+- All animation and particles are disabled under `prefers-reduced-motion`
+- Count-up animations carry a `setTimeout` fallback, so the correct value is reached even in extreme cases
+- Copying the email address degrades through three tiers: Clipboard API → 800ms timeout/failure → `execCommand` → if that fails too, the text is selected automatically with a prompt
+
+---
+
+## Technical Notes
+
+- **Single file**: HTML / CSS / JS / data / SVG icons / the Canvas particle engine are all inlined in `index.html`, roughly 75 KB
+- **Zero network requests**: no web fonts, no CDN, no API calls; the only URL in the file is the SVG namespace constant `http://www.w3.org/2000/svg`, which issues no request
+- **Typography**: the system serif stack (Song-style faces), so nothing needs downloading on any platform
+- **Responsive breakpoints**: two columns collapse to one at ≤1000px, spacing and wheel size compress further at ≤780px, and mouse parallax switches off on narrow screens
+- **A note on solar term dates**: the page uses the commonly cited ranges (around the 6th/21st in the first half of the year, the 8th/23rd in the second); no perpetual-calendar precision is applied, so actual ingress times vary slightly year to year
+- **Compatibility**: written in ES5 syntax with no build output, ready to run directly in modern browsers
+
+---
+
+## Directory Structure
+
+```
+.
+├── index.html   # Everything (structure + styles + scripts + data)
 └── README.md
 ```
